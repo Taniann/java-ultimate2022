@@ -1,5 +1,7 @@
 package com.tn.datastructure;
 
+import java.util.Objects;
+
 /**
  * A simple implementation of the Hash Table that allows storing a generic key-value pair. The table itself is based
  * on the array of {@link Node} objects.
@@ -15,6 +17,11 @@ package com.tn.datastructure;
  * @param <V> value type parameter
  */
 public class HashTable<K, V> {
+    private static final int DEFAULT_INITIAL_CAPACITY = 3;
+    private int size = 0;
+
+    @SuppressWarnings("unchecked")
+    private Node<K, V>[] nodes = new Node[DEFAULT_INITIAL_CAPACITY];
 
     /**
      * Puts a new element to the table by its key. If there is an existing element by such key then it gets replaced
@@ -26,7 +33,37 @@ public class HashTable<K, V> {
      * @return old value or null
      */
     public V put(K key, V value) {
-        throw new UnsupportedOperationException("You should implement a method that throws this exception");
+        Objects.requireNonNull(key);
+        int hash = key.hashCode();
+        int index = calculateIndex(hash);
+        Node<K, V> newNode = new Node<>(key, value);
+        if (nodes[index] == null) {
+            nodes[index] = newNode;
+        } else {
+            Node<K, V> current = nodes[index];
+            while (current.next != null) {
+                if (current.key.equals(key)) {
+                    V existingValue = current.value;
+                    current.value = value;
+                    return existingValue;
+                } else {
+                    current = current.next;
+                }
+            }
+            if (current.key.equals(key)) {
+                V existingValue = current.value;
+                current.value = value;
+                return existingValue;
+            } else {
+                current.next = newNode;
+            }
+        }
+        size++;
+        int currentCapacity = nodes.length;
+        if (size == currentCapacity) {
+            resize(currentCapacity * 2);
+        }
+        return null;
     }
 
     /**
@@ -37,6 +74,35 @@ public class HashTable<K, V> {
      * ...
      */
     public void printTable() {
-        throw new UnsupportedOperationException("You should implement a method that throws this exception");
+        for (int i = 0; i < nodes.length; i++) {
+            System.out.print(i + ": ");
+            Node<K, V> current = nodes[i];
+            if (current != null) {
+                while (current.next != null) {
+                    System.out.print(current.key + ":" + current.value + " -> ");
+                    current = current.next;
+                }
+                System.out.println(current.key + ":" + current.value);
+            } else {
+                System.out.println();
+            }
+        }
+    }
+
+    private int calculateIndex(int hash) {
+        return Math.abs(hash) % nodes.length;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resize(int newSize) {
+        Node<K, V>[] newNodes = new Node[newSize];
+        for (Node<K, V> node : nodes) {
+            if (node != null) {
+                int hash = node.key.hashCode();
+                int index = Math.abs(hash) % newSize;
+                newNodes[index] = node;
+            }
+        }
+        nodes = newNodes;
     }
 }
