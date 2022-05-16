@@ -1,4 +1,4 @@
-package com.tn.datastructure;
+package com.tn.datastructure.hashtable;
 
 /**
  * A generic class Node that supports two type params: one for the key and one for the value.

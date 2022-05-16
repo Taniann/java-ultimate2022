@@ -1,4 +1,4 @@
-package com.tn.datastructure;
+package com.tn.datastructure.hashtable;
 
 import java.util.Objects;
 

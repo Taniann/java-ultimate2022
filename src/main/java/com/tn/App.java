@@ -1,6 +1,6 @@
 package com.tn;
 
-import com.tn.datastructure.HashTable;
+import com.tn.datastructure.hashtable.HashTable;
 
 /**
  * Hello world!
