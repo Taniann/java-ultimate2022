@@ -17,7 +17,7 @@ import java.util.Objects;
  * @param <V> value type parameter
  */
 public class HashTable<K, V> {
-    private static final int DEFAULT_INITIAL_CAPACITY = 3;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
     private int size = 0;
 
     @SuppressWarnings("unchecked")
@@ -97,10 +97,21 @@ public class HashTable<K, V> {
     private void resize(int newSize) {
         Node<K, V>[] newNodes = new Node[newSize];
         for (Node<K, V> node : nodes) {
-            if (node != null) {
-                int hash = node.key.hashCode();
+            Node<K, V> current = node;
+            while (current != null) {
+                int hash = current.key.hashCode();
                 int index = Math.abs(hash) % newSize;
-                newNodes[index] = node;
+                var newNodeFromCurrent = new Node<>(current.key, current.value);
+                var nodeFromNewNodes = newNodes[index];
+                if (nodeFromNewNodes != null) {
+                    while (nodeFromNewNodes.next != null) {
+                        nodeFromNewNodes = newNodeFromCurrent.next;
+                    }
+                    nodeFromNewNodes.next = newNodeFromCurrent;
+                } else {
+                    newNodes[index] = newNodeFromCurrent;
+                }
+                current = current.next;
             }
         }
         nodes = newNodes;

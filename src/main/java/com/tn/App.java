@@ -8,8 +8,8 @@ import com.tn.datastructure.hashtable.HashTable;
 public class App {
     public static void main(String[] args) {
         HashTable<String, String> hashTable = new HashTable<>();
-       /* hashTable.put("null", null);
-        hashTable.put("null", "null1");
+        hashTable.put("1", "A1");
+        hashTable.put("2", "A2");
         hashTable.put("3", "A3");
         hashTable.put("4", "A4");
         hashTable.put("5", "A5");
@@ -23,11 +23,9 @@ public class App {
         hashTable.put("13", "A13");
         hashTable.put("14", "A14");
         hashTable.put("15", "A15");
-        hashTable.printTable();*/
-        hashTable.put("1", "A1");
-        hashTable.put("2", "A2");
-        hashTable.put("3", "A3");
-        hashTable.put("3", "A");
+        hashTable.printTable();
+        hashTable.put("16", "A16");
+        hashTable.put("15", "overriddenA15");
         hashTable.printTable();
     }
 }
