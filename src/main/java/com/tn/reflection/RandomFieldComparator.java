@@ -48,7 +48,7 @@ public class RandomFieldComparator<T> implements Comparator<T> {
     @Override
     public int compare(T o1, T o2) {
         if (comparableField == null) {
-            throw new IllegalStateException("Comparable field is not set");
+            throw new IllegalArgumentException("Comparable field is not set");
         }
 
         if (!compareOnlyAccessibleFields) {
