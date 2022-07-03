@@ -19,9 +19,10 @@ public class ClientApp {
 
             @Cleanup PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             @Cleanup BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer.write("GET /hello?name=Bob HTTP/1.1");
-            writer.write(HOST);
-            writer.write("\n");
+            writer.println("GET /evening?name=Bob HTTP/1.1");
+            writer.println("Host: localhost");
+            writer.println("Cookie: SESSION_ID=a514de4a-2178-4187-b16f-cdbbe067f0a7");
+            writer.println("");
             writer.flush();
             String response;
             while ((response = reader.readLine()) != null) {
