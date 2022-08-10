@@ -2,6 +2,7 @@ package com.tn.web.webservice;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,8 @@ import java.net.URI;
 @RequestMapping("/pictures")
 @RequiredArgsConstructor
 public class NasaPictureController {
-
-    private final NasaLargestPictureService pictureService;
+    @Autowired
+    private  NasaLargestPictureService pictureService;
 
     @GetMapping("/{sol}/largest")
     public ResponseEntity getLargestImage(@PathVariable("sol") int sol) {
